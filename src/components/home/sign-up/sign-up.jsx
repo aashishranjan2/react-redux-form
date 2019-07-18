@@ -44,9 +44,18 @@ export class SignUp extends React.Component {
     
       handleSubmit(event) {
         event.preventDefault();
+        const {fullName, email, password, rePassword, mobile } = this.state.formControls;
+        const body = {
+           fullName: fullName.value,
+           email: email.value,
+           password: password.value,
+           rePassword: rePassword.value,
+           mobile: mobile.value
+         };
+     
        
         console.log('state', this.state.formControls)
-        postUserDetails(this.state.formControls).then(data => {
+        postUserDetails(body).then(data => {
           console.log("details added");
           alert("Details are added successfully!!");
           this.setStateValue();
@@ -110,7 +119,7 @@ export class SignUp extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="mobile">Mobile</label>
-                        <input type="mobile" name="mobile"
+                        <input type="number" name="mobile"
                         value={this.state.formControls.mobile.value} 
                         onChange={this.changeHandler}
                         className="form-control" placeholder="Enter your mobile number.."></input>
