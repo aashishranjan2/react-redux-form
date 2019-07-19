@@ -29,7 +29,6 @@ export class SignUp extends React.Component {
       changeHandler = event => {
         const name = event.target.name;
         const value = event.target.value;
-        console.log('name = ' + name, 'value = ' + value)
       this.setState({
         formControls: {
           ...this.state.formControls,
@@ -39,7 +38,6 @@ export class SignUp extends React.Component {
           }
         }
       });
-      console.log("value", this.state);
       }
     
       handleSubmit(event) {
@@ -52,13 +50,9 @@ export class SignUp extends React.Component {
            rePassword: rePassword.value,
            mobile: mobile.value
          };
-     
-       
-        console.log('state', this.state.formControls)
-        postUserDetails(body).then(data => {
-          console.log("details added");
-          alert("Details are added successfully!!");
-          this.setStateValue();
+        postUserDetails(body).then(response => {
+          if (response.success) return this.setStateValue();
+          console.log(response.error)
         });
       }
       setStateValue() {
@@ -84,7 +78,6 @@ export class SignUp extends React.Component {
       }
 
     render() {
-        // const { handleSubmit } = this.props;
         return(
             <div className="signup-container">
                 <h2 className="main-txt">Sign up form</h2>
@@ -119,7 +112,7 @@ export class SignUp extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="mobile">Mobile</label>
-                        <input type="number" name="mobile"
+                        <input type="text" name="mobile"
                         value={this.state.formControls.mobile.value} 
                         onChange={this.changeHandler}
                         className="form-control" placeholder="Enter your mobile number.."></input>
