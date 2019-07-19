@@ -13,13 +13,11 @@ export async function postUserDetails(body) {
       }
     };
     return await fetch(url + postUserDetailsEndPoint, config)
-      .then(
-        res => res.json()
-        )
-      .then(
-        response => console.log("Success:", JSON.stringify(response))
-        )
-      .catch(
-        error => console.error("Error:", error)
-        );
+     .then(res => res.json())
+    .then(response => {
+      return response;
+    })
+    .catch(error => {
+      return error;
+    });
   }
