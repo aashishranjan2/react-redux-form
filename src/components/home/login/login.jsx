@@ -1,10 +1,11 @@
 import React from 'react';
-import { postUserDetails } from '../../../services/user-service';
+import { fetchUserDetails } from '../../../services/user-service';
 
 export class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+          isLoggedIn : false,
           formControls: {
             email: {
               value: ""
@@ -35,17 +36,24 @@ export class Login extends React.Component {
     
       handleSubmit(event) {
         event.preventDefault();
-       
-        console.log('state', this.state.formControls)
-        postUserDetails(this.state.formControls).then(data => {
-          console.log("details added");
-          alert("Details are added successfully!!");
-         this.setStateValue();
+        const {email, password } = this.state.formControls;
+        const body = {
+           email: email.value,
+           password: password.value
+         };
+        fetchUserDetails(body).then(response => {
+          if (response.success) {
+            this.setStateValue(response.success.isLoggedIn);
+            // return window.location.href = '/profile'
+          } else {
+            this.setStateValue(false);
+          } 
         });
         
       }
-      setStateValue() {
+      setStateValue(isLoggedIn) {
         this.setState({
+          isLoggedIn : isLoggedIn,
             formControls: {
               email: {
                 value: ""
@@ -55,12 +63,13 @@ export class Login extends React.Component {
               },
             }
       });
+      this.props.parentCallback(isLoggedIn);
       }
 
     render() {
         // const handleSubmit = this.props;
         return(
-            <div className="signup-container">
+            <div className="form-container">
                 <h2 className="main-txt">Login form</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">

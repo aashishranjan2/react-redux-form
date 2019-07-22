@@ -79,8 +79,8 @@ export class SignUp extends React.Component {
 
     render() {
         return(
-            <div className="signup-container">
-                <h2 className="main-txt">Sign up form</h2>
+            <div className="form-container">
+                <h2>Sign up form</h2>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="fullName">Full Name</label>
