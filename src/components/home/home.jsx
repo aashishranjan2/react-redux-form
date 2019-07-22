@@ -24,27 +24,26 @@ export class HomeComponent extends React.Component {
     console.log('login')
        this.setState({showLoginForm: true, showSignUpForm: false, showHideButton: false})
    }
+   callbackFunction = (childData) => {
+    this.setState({isLoggedIn: childData});
+    this.props.parentCallback(this.state.isLoggedIn);
+}
     render() {
         const isLoggedIn = false;
-        // if (isLoggedIn) {
-        //     <React.Fragment>
-        //     <Login isLoggedIn />
-        //     <SignUp isLoggedIn/>
-        //     </React.Fragment>
-        // }
         return(
             <div className="container">
-                <div className="btn-placement">
-                    {/* {!isLoggedIn ?  */}
+                <div >
+                    {/* {!isLoggedIn ? */}
                     { this.state.showHideButton ? 
                     <React.Fragment>
-                    <button onClick={this.showLoginForm}> Login</button>
+                    <button className="btn-placement" onClick={this.showLoginForm}> Login</button>
                     <button onClick={this.showSignupForm}> Sign up</button>
                     </React.Fragment>
                     : null}
                     {/* : ''} */}
-                    {this.state.showLoginForm ? <Login /> : null}
+                    {this.state.showLoginForm ? <Login parentCallback = {this.callbackFunction}/> : null}
                     {this.state.showSignUpForm ? <SignUp /> : null}
+                    
                 </div>
             </div>
         );
